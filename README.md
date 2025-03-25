@@ -77,21 +77,3 @@ hcp auth login
 source .remote.env && terraform init
 terraform apply
 ```
-
-## Running the template script
-
-**Important**: All the following commands must be ran at the root of the project.
-
-Before running the script to generate the template-based files:
-
-```shell
-python3 -m venv scripts/env
-source scripts/env/bin/activate
-pip install -r scripts/requirements.txt
-```
-
-running the script:
-
-```shell
-python3 scripts/main.py
-```
