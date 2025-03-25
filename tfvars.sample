@@ -1,0 +1,33 @@
+aws_region = ""
+
+instance_name = ""
+
+debian_ami = ""
+
+debian_ami_default_user = ""
+
+volume_device_name = ""
+
+instance_type = ""
+
+instance_az = ""
+
+pgbackup_bucket_prefix = ""
+
+pgbackup_repo = ""
+
+app_domain_name = ""
+
+ebs_vol_name = ""
+
+ssh_key_name = ""
+
+security_group_name = ""
+
+iam_bucket_user = ""
+
+vault_secrets_app = ""
+
+cf_zone_id = ""
+
+cf_account_id = ""

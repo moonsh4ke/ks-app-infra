@@ -1,0 +1,2 @@
+organization = "your_organization"
+workspaces { name="your_workspace" }
