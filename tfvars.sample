@@ -31,3 +31,7 @@ vault_secrets_app = ""
 cf_zone_id = ""
 
 cf_account_id = ""
+
+graf_stack_slug = ""
+
+graf_stack_url = ""
