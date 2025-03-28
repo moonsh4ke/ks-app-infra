@@ -32,6 +32,7 @@ Pre-requisites:
 
     ```shell
     gpg --export your_key_id | base64 > pgp_key.pub.b64
+    gpg --export-secret-keys --armor your_key_id > pgp_key
     ```
 
 7. Create a `terraform.tfvars` file (use the `tfvars.sample` as a reference).

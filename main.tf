@@ -19,6 +19,11 @@ terraform {
       version = "0.91.0"
     }
 
+    grafana = {
+      source = "grafana/grafana"
+      version = "~> 3.22.0"
+    }
+
   }
 
   required_version = ">= 1.2.0"
@@ -38,9 +43,26 @@ provider "aws" {
 provider "cloudflare" {
 }
 
-// Comment this block if you're not using hcp vault secrets
-data "hcp_vault_secrets_app" "web_application" {
-  app_name = var.vault_secrets_app
+provider "grafana" {
+  url  = var.graf_stack_url
+  cloud_access_policy_token=data.hcp_vault_secrets_secret.grafana_token.secret_value
+}
+
+module "grafana_auth" {
+  source = "./modules/grafana-auth"
+
+  graf_stack_slug = var.graf_stack_slug
+  vault_secrets_app = var.vault_secrets_app
+}
+
+data "hcp_vault_secrets_secret" "ssh_public" {
+  app_name    = var.vault_secrets_app
+  secret_name = "SSH_PUBLIC"
+}
+
+data "hcp_vault_secrets_secret" "pgp_public" {
+  app_name    = var.vault_secrets_app
+  secret_name = "PGP_PUBLIC_B64"
 }
 
 resource "aws_volume_attachment" "ebs_att" {
@@ -77,7 +99,7 @@ resource "aws_ebs_volume" "pgebs" {
 resource "aws_key_pair" "ks-app-key" {
   key_name   = var.ssh_key_name
   # Not using hcp vault secrets: you can use a file or a hardcoded string for testing purposes.
-  public_key = data.hcp_vault_secrets_app.web_application.secrets["SSH_PUBLIC"]
+  public_key = data.hcp_vault_secrets_secret.ssh_public.secret_value
 }
 
 # -Security group configuration-
@@ -216,7 +238,7 @@ resource "aws_iam_access_key" "pgbackup_access_key" {
   user = aws_iam_user.bucket_user.name
   # Not using hcp vault secrets: you can use a file or a hardcoded string for testing purposes.
   # Note: this should be a pgp public key (non-armored) in base64
-  pgp_key = data.hcp_vault_secrets_app.web_application.secrets["PGP_PUBLIC_B64"]
+  pgp_key = data.hcp_vault_secrets_secret.pgp_public.secret_value
 }
 
 # Clouflare dns record

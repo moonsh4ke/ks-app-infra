@@ -82,10 +82,10 @@ variable "iam_bucket_user" {
   type = string
 }
 
-variable "HCP_ORG" {
+variable "graf_stack_slug" {
   type = string
 }
 
-variable "HCP_WS" {
+variable "graf_stack_url" {
   type = string
 }

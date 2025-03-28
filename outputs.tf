@@ -58,7 +58,10 @@ output "default_user" {
   value = var.debian_ami_default_user
 }
 
-output "secrets" {
-  value = data.hcp_vault_secrets_app.web_application.secrets
-  sensitive = true
+output "fingerprint" {
+  value = aws_key_pair.ks-app-key.fingerprint 
+}
+
+output "aws_region" {
+  value = var.aws_region
 }
