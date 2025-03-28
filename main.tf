@@ -65,6 +65,11 @@ data "hcp_vault_secrets_secret" "pgp_public" {
   secret_name = "PGP_PUBLIC_B64"
 }
 
+data "hcp_vault_secrets_secret" "grafana_token" {
+  app_name    = var.vault_secrets_app
+  secret_name = "GRAFANA_TOKEN"
+}
+
 resource "aws_volume_attachment" "ebs_att" {
   device_name = var.volume_device_name
   volume_id   = aws_ebs_volume.pgebs.id
